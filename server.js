@@ -71,11 +71,9 @@ server.delete('/api/:title', (req, res) => {
 
 if (process.env.NODE_ENV === 'production') {
 
-  app.use(express.static('frontend/build'));
+  server.use(express.static('frontend/build'));
 
-  
-
-	app.get('*', (req, res) => {
+	server.get('*', (req, res) => {
 
 		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
 
@@ -91,7 +89,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 
 	console.log(`Server is listening on port ${PORT}`);
 
