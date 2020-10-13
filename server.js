@@ -4,8 +4,12 @@ const server = express();
 const path = require('path');
 const fileHandler = require('fs');
 const favourites = require('./favourites');
+const itemsList = require('./itemsList')
+const fetch = require('node-fetch')
 
 const helmet = require("helmet");
+const { response } = require('express');
+
 
 server.use(helmet());
 
@@ -15,9 +19,43 @@ server.use(express.json());
 
 server.get('/api', (req, res) => res.json(favourites));
 
+server.get('/itunes', (req, res) => res.json(itemsList));
+
 const titleFilter = (req) => (favourites) => favourites.title === req.params.title;
 
+
+//This is the API fetch call in the backend//
+
+server.get('/itunes/:inputtext/:entities', async (req, res) => {
+
+		const entity = req.params.entities;
+		const input = req.params.inputtext;
+		console.log(input)
+		console.log(entity)
+	const api_url = `https://itunes.apple.com/search?term=${input}&entity=${entity}&limit=10`
+	const fetch_response = await fetch(api_url)
+	 const json = await fetch_response.json()
+	 const item = json.results
+	 
+	 
+
+		fileHandler.writeFile(
+			'itemslist.js',
+			'const itemslist = ' + '[' + JSON.stringify(item) + ']' + '; module.exports = itemslist ',
+			(err) => {
+				if (err) throw err;
+				res.send('File created!');
+			}
+		);
+
+		
+		
+})
+
+
+
 server.post('/api', (req, res) => {
+	
 	const newSong = {
 		image: req.body.image,
 		title: req.body.title,
@@ -66,7 +104,6 @@ server.delete('/api/:title', (req, res) => {
 		res.status(400).json({ msg: `No project with the title of ${req.params.title}` });
 	}
 });
-
 
 
 if (process.env.NODE_ENV === 'production') {

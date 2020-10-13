@@ -21,12 +21,16 @@ class FavouritesList extends React.Component {
             FavouriteSongs: result
             }); 
           })}
+
+          
       render() {
+        
         const { FavouriteSongs, isLoaded } = this.state;
         console.log(FavouriteSongs)
         if (!isLoaded) {
             return <div>Loading...</div>;
             } else {
+              
             return (
        <div>
         {FavouriteSongs.map(items => (

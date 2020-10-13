@@ -18,23 +18,22 @@ class MainCard extends React.Component {
 
 	
 AddToFavourites(event){
-	console.log(this.state.Title)
+	console.log(this.state.MainImage)
 	event.preventDefault();
     const data = JSON.stringify({ image:this.state.MainImage, title:this.state.Title, singer: this.state.Singer })
     console.log(data)
     
-    fetch("/api", {
+    fetch('/api', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: data,
             
-        }).then(res => res.json())
+        })
        
-        .then(response => console.log('Success:', JSON.stringify(response)))
         
-        alert("New Song hase been added to favourites")
+        alert("New Song has been added to favourites")
 }
 
 

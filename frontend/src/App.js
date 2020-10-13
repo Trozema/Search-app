@@ -5,13 +5,14 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import List from './Components/List';
 import FavouritesList from './Components/FavouritesList';
-import FavouritesPage from './Components/FavouritePage'
+import FavouritesPage from './Components/FavouritePage';
+import MainList from './Components/MainList'
 
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
 
-const MainPage = () => <div><TopNav></TopNav><HomePage></HomePage><List></List></div>
+const MainPage = () => <div><TopNav></TopNav><HomePage></HomePage><List></List><MainList></MainList></div>
 const SecondPage = () => <div><TopNav></TopNav><FavouritesPage></FavouritesPage><FavouritesList></FavouritesList></div>
 
 
